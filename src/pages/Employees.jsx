@@ -27,7 +27,7 @@ const Employees = () => {
 
   useEffect(() => {
     getAllEmployees();
-  }, []);
+  }, [employees]);
 
   return (
   <div>

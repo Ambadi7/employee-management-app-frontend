@@ -10,6 +10,23 @@ const SearchEmployee = () => {
   const [employee, setEmployee] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const deleteEmployee = async (id) => {
+    try {
+      const { data } = await axios.delete(
+        `${API}/delete-employee/${id}`
+      )
+
+      if (data && data.success) {
+        toast.success(data.message)
+      } else {
+        toast.error(data.message)
+      }
+    } catch (error) {
+      console.log(error)
+      toast.error(`Error in deleting employee: ${error.message}`)
+    }
+  }
+
   const getEmployee = async () => {
     try {
       setLoading(true);
@@ -84,6 +101,7 @@ const SearchEmployee = () => {
 
                     <button
                       type="button"
+                      onClick={() => deleteEmployee(employee._id)}
                       className="px-2 py-1 md:px-6 md:py-2 font-semibold rounded bg-red-600 text-gray-50"
                     >
                       Delete

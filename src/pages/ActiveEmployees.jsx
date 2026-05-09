@@ -27,7 +27,7 @@ const ActiveEmployees = () => {
 
   useEffect(() => {
     getAllEmployees();
-  }, []);
+  }, [employees]);
 
   return (
   <div>

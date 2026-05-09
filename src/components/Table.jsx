@@ -1,6 +1,25 @@
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { toast } from "sonner";
 
 const Table = ({ data }) => {
+  const API = import.meta.env.VITE_API_URL;
+  const deleteEmployee = async (id) => {
+    try {
+      const { data } = await axios.delete(
+        `${API}/delete-employee/${id}`
+      )
+
+      if (data && data.success) {
+        toast.success(data.message)
+      } else {
+        toast.error(data.message)
+      }
+    } catch (error) {
+      console.log(error)
+      toast.error(`Error in deleting employee: ${error.message}`)
+    }
+  }
   return (
     <div className="container p-2 mx-auto sm:p-4 text-gray-800">
       <h2 className="mb-4 text-2xl font-semibold leading-tight">
@@ -71,6 +90,7 @@ const Table = ({ data }) => {
 
                     <button
                       type="button"
+                      onClick={() => deleteEmployee(employee._id)}
                       className="px-2 py-1 md:px-6 md:py-2 font-semibold rounded lg:block bg-red-600 text-gray-50"
                     >
                       Delete
